@@ -23,6 +23,7 @@ module VirtualNetwork 'modules/virtual-network.bicep' = {
   name: '${environmentPrefix}-vnet'
   scope: resourceGroup
   params: {
+    IpSecondSection: Version
     Name: '${environmentPrefix}-vnet'
     Location: Location
     RouteTableId: RouteTable.outputs.RouteTableId

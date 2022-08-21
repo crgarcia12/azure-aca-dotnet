@@ -3,6 +3,7 @@ targetScope='resourceGroup'
 param Name string
 param Location string
 param RouteTableId string
+param IpSecondSection int
 
 resource VirtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: Name
@@ -10,14 +11,14 @@ resource VirtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   properties: {
     addressSpace: {
       addressPrefixes: [
-        '10.0.0.0/16'
+        '10.${IpSecondSection}.0.0/16'
       ]
     }
     subnets: [
       {
         name: 'acainfra'
         properties: {
-          addressPrefix: '10.0.0.0/23'
+          addressPrefix: '10.${IpSecondSection}.0.0/23'
           routeTable: {
             id: RouteTableId
           }
@@ -26,7 +27,7 @@ resource VirtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
       {
         name: 'acaruntime'
         properties: {
-          addressPrefix: '10.0.2.0/23'
+          addressPrefix: '10.${IpSecondSection}.2.0/23'
           routeTable: {
             id: RouteTableId
           }
@@ -35,7 +36,7 @@ resource VirtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
       {
         name: 'acr'
         properties: {
-          addressPrefix: '10.0.4.0/24'
+          addressPrefix: '10.${IpSecondSection}.4.0/24'
           routeTable: {
             id: RouteTableId
           }
