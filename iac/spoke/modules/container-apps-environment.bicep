@@ -29,3 +29,5 @@ resource AcaEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'  = {
 }
 
 output managedEnvironmentId string = AcaEnvironment.id
+output defaultDomain string = AcaEnvironment.properties.defaultDomain
+output staticIp string = AcaEnvironment.properties.staticIp

@@ -3,7 +3,7 @@ targetScope='resourceGroup'
 param Name string
 param Location string
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
+resource VirtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: Name
   location: Location
   properties: {
@@ -41,6 +41,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   }
 }
 
+output vnetId string = VirtualNetwork.id
 output subnetIds object = {
   acainfra: resourceId('Microsoft.Network/VirtualNetworks/subnets', Name, 'acainfra')
   acaruntime: resourceId('Microsoft.Network/VirtualNetworks/subnets', Name, 'acaruntime')

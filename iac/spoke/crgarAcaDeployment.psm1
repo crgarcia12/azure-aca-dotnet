@@ -16,10 +16,11 @@ function New-CrgarAcaDeployment {
         -Name "$($PSCmdLet.MyInvocation.MyCommand.Name)$Version" `
         -TemplateFile .\main.bicep `
         -TemplateParameterObject $params `
+        -DeploymentDebugLogLevel All `
         -WhatIf:$WhatIf
 }
 
-function New-CrgarAcaApp1Deployment {
+function New-CrgarAcaDemoAppDeployment {
     [CmdletBinding()]
     param (
         $Version,
@@ -37,6 +38,7 @@ function New-CrgarAcaApp1Deployment {
         -ResourceGroupName crgar-aca-dotnet102-rg `
         -TemplateFile .\main-apponly.bicep `
         -TemplateParameterObject $params `
+        -DeploymentDebugLogLevel All `
         -WhatIf:$WhatIf
 }
 
