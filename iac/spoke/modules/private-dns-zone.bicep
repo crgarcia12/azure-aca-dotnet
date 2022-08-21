@@ -1,6 +1,5 @@
 targetScope='resourceGroup'
 
-param Location string
 param ContainerAppDefaultHostName string
 param ContainerAppLoadBalancerIp string
 param VirtualNetworkName string

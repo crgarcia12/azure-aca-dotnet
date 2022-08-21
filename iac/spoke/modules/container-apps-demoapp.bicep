@@ -7,6 +7,9 @@ param ManagedEnvironmentId string
 resource containerapps 'Microsoft.App/containerapps@2022-03-01' = {
   name: Name
   location: Location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     managedEnvironmentId: ManagedEnvironmentId
     configuration: {

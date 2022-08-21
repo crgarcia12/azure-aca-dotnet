@@ -10,12 +10,22 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   location: Location
 }
 
+module RouteTable 'modules/route-table.bicep' = {
+  name: '${environmentPrefix}-udr'
+  scope: resourceGroup
+  params: {
+    Name: '${environmentPrefix}-udr'
+    Location: Location
+  }
+}
+
 module VirtualNetwork 'modules/virtual-network.bicep' = {
   name: '${environmentPrefix}-vnet'
   scope: resourceGroup
   params: {
     Name: '${environmentPrefix}-vnet'
     Location: Location
+    RouteTableId: RouteTable.outputs.RouteTableId
   }
 }
 
@@ -27,6 +37,19 @@ module LogAnalytics 'modules/monitoring.bicep' = {
     AppInsightsName: '${environmentPrefix}-appinsights'
     Location: Location
   }
+}
+
+module ContainerRegistry 'modules/azure-container-registry.bicep' = {
+  name: '${environmentPrefix}-acr'
+  scope: resourceGroup
+  params: {
+    Name: '${environmentPrefix}-acr'
+    Location: Location
+    PrivateLinkName: 'acrpe'
+    VirtualNetworkId: VirtualNetwork.outputs.vnetId
+    SubnetId: VirtualNetwork.outputs.subnetIds.acr
+ }
+
 }
 
 module ContainerAppsEnvironment 'modules/container-apps-environment.bicep' = {
@@ -45,7 +68,6 @@ module PrivateDnsZone 'modules/private-dns-zone.bicep' = {
   name: '${environmentPrefix}-dns'
   scope: resourceGroup
   params: {
-    Location: Location
     ContainerAppDefaultHostName: ContainerAppsEnvironment.outputs.defaultDomain
     ContainerAppLoadBalancerIp: ContainerAppsEnvironment.outputs.staticIp
     VirtualNetworkName: VirtualNetwork.name

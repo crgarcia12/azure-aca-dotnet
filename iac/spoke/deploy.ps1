@@ -10,8 +10,8 @@
 #
 # get-Job | receive-job -Wait
 
-$Version = 106
+$Version = 108
 Import-Module .\crgarAcaDeployment.psm1 -Force
 #Remove-CrgarAcaDeployment -Version $Version -Verbose
-New-CrgarAcaDeployment -Version $Version -Location "westeurope" -Verbose -WhatIf
+New-CrgarAcaDeployment -Version $Version -Location "westeurope" -Verbose
 #New-CrgarAcaDemoAppDeployment  -Version $Version -Location "WestEurope" -Verbose
