@@ -40,3 +40,13 @@ module ContainerAppsEnvironment 'container-apps-environment.bicep' = {
     RuntimeSubnetId: VirtualNetwork.outputs.subnetIds.acaruntime
   }
 }
+
+module ContainerAppsApp1 'container-apps-app1.bicep' = {
+  name: '${environmentPrefix}-acaapp1'
+  scope: resourceGroup
+  params: {
+    Name: '${environmentPrefix}-acaenv'
+    Location: Location
+    ManagedEnvironmentId: ContainerAppsEnvironment.outputs.managedEnvironmentId
+  }
+}

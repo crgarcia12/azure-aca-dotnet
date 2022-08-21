@@ -1,31 +1,17 @@
-#Import-Module Az
 
-function New-crgarAcaDeployment {
-    [CmdletBinding()]
-    param (
-        $Version,
-        
-        $Location,
-        
-        [switch]
-        $WhatIf
-    )
+# 1..10 | % {
+#     Start-Job -ScriptBlock {
+#         $Version = $args[0]
+#         Import-Module .\crgarAcaDeployment.psm1 -Force
+#         #New-CrgarAcaDeployment -Version $Version -Location "East US" -Verbose
+#         #Remove-CrgarAcaDeployment -Version $Version -Verbose
+#     } -ArgumentList $_
+# }
+#
+# get-Job | receive-job -Wait
 
-    $params = @{
-        Version = $Version;
-        Location = $Location
-    }
-    New-AzSubscriptionDeployment `
-        -Location $Location `
-        -Name "$($PSCmdLet.MyInvocation.MyCommand.Name)$Version" `
-        -TemplateFile .\main.bicep `
-        -TemplateParameterObject $params `
-        -WhatIf:$WhatIf
-}
-
-1..100 | % {
-    Start-Job -ScriptBlock {
-        New-crgarAcaDeployment -Version $_ -Location "East US" -Verbose
-    }
-}
-
+$Version = 102
+Import-Module .\crgarAcaDeployment.psm1 -Force
+#Remove-CrgarAcaDeployment -Version $Version -Verbose
+#New-CrgarAcaDeployment -Version $Version -Location "WestEurope" -Verbose -WhatIf
+New-CrgarAcaApp1Deployment  -Version $Version -Location "WestEurope" -Verbose
